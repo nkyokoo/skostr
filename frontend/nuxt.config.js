@@ -14,7 +14,7 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/shoefavicon.ico' }
     ]
   },
 
@@ -39,10 +39,35 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth'
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: process.env.NODE_ENV !== 'production' ? `http://localhost/api` :  `https://localhost/api`
+  },
+  auth: {
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    },
+    cookie: {
+      options: {
+        maxAge:7200
+      }
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: 'user/login', method: 'post', propertyName:'data.token'},
+          user: { url: 'user', method: 'get', propertyName: 'data' },
+          logout: false
+        },
+      }
+    }
+  },
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
   vuetify: {

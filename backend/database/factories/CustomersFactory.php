@@ -2,18 +2,19 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Customers;
+use App\Models\ShoeSize;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class UserFactory extends Factory
+class CustomersFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = Customers::class;
 
     /**
      * Define the model's default state.
@@ -22,12 +23,18 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $gender = $this->faker->randomElement(['male', 'female']);
+
+
         return [
             'id' => $this->faker->uuid,
-            'name' => $this->faker->name,
+            'name' => $this->faker->name($gender),
             'email' => $this->faker->unique()->safeEmail,
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'age' => random_int(13,80),
+            'gender' => $gender,
+            'idshoesizes' => function () {
+                return ShoeSize::Factory()->create()->id;
+            },
         ];
     }
 }

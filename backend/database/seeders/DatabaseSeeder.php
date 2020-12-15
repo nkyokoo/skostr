@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\ShoeSize;
+use http\Client\Curl\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(1)->create();
+        \App\Models\Customers::factory(20)->create();
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class testcontroller extends Controller
 {
-    function helloworld(){
+   public function helloworld(){
         return "{message:'hello world'}";
     }
 }
