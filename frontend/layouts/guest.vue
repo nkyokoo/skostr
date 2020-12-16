@@ -28,7 +28,6 @@
 <script>
 export default {
   name: "guest",
-  middleware: "guest",
 
 }
 </script>

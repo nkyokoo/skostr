@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
 
     public function login(){
-        if (!Auth::check()) {
             $rules = [
                 'email' => 'required',
                 'password' => 'required',
@@ -27,21 +28,24 @@ class AuthController extends Controller
                 ], 400);
             }
 
-            if (! $token = auth()->attempt(["email" => request()->post("email"), "password" => request()->post("password")])) {
+        try {
+            if (! $token = auth::attempt($validate->validated())) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
+        } catch (ValidationException $e) {
+                return $e;
+        }
 
-            return response()->json([
+        return response()->json([
                 'status' => 'success',
                 'message' => 'Successfully',
                 'data' => [
                     'token' => [
                         'access_token' => $token,
                         'token_type' => 'bearer',
+                        'expires_in' => auth::factory()->getTTL() * 60
                     ],
                 ]
             ], 200);
-        }
-
     }
 }

@@ -9,8 +9,8 @@ class Customers extends Model
 {
     use HasFactory;
 
-    public function ShoeSize(){
+    protected $table = 'customers';
 
-        return $this->hasOne(ShoeSize::class);
-    }
+
+
 }

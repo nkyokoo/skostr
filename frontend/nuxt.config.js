@@ -51,7 +51,7 @@ export default {
       login: '/login',
       logout: '/',
       callback: '/login',
-      home: '/'
+      home: '/administration'
     },
     cookie: {
       options: {
@@ -61,7 +61,7 @@ export default {
     strategies: {
       local: {
         endpoints: {
-          login: { url: 'user/login', method: 'post', propertyName:'data.token'},
+          login: { url: 'auth/login', method: 'post', propertyName:'data.token.access_token'},
           user: { url: 'user', method: 'get', propertyName: 'data' },
           logout: false
         },

@@ -22,11 +22,11 @@
           <v-card-title>
             Login
           </v-card-title>
-          <v-card-text v-model="formValid">
-            <v-form>
-              <v-text-field type="email" :rules="emailRules" label="Email">
+          <v-card-text>
+            <v-form v-model="formValid">
+              <v-text-field type="email" v-model="email" :rules="emailRules" label="Email">
               </v-text-field>
-              <v-text-field type="password"  :rules="passwordRules" label="Adgangskode">
+              <v-text-field type="password" v-model="password"  :rules="passwordRules" label="Adgangskode">
               </v-text-field>
             </v-form>
           </v-card-text>
@@ -62,16 +62,16 @@ import XRegExp from "xregexp";
 
 export default {
   name: "login",
-  layout:"guest",
+  layout:"none",
+  middleware:'guest',
   data(){
     return {
-      formValid:true,
+      formValid:false,
+      email:'',
+      password:'',
       emailRules:[
         v=> {
           return !!v || 'Email kan ikke være tom'
-        },
-        v => {
-          return XRegExp('^[\\p{L}\\p{N}]+@\\p{L}+[.]\\p{L}+$').test(v) || 'Email skal være gyldig!'
         },
       ],
       passwordRules:[
@@ -84,8 +84,38 @@ export default {
   },
   methods: {
    async login(){
+     if(this.formValid === true){
+       let crendetials = {
+         email:this.email,
+         password:this.password,
+       }
+       try {
+         await this.$auth.loginWith('local', {
+           data:crendetials
+         })
+          this.$router.push('administration')
+       } catch (err) {
 
-    }
+         if (err.response.data) {
+           if (err.response.data[0].field === 'email' || err.response.data[0].field === "password") {
+             alert('Email or password incorrect');
+           } else {
+
+             alert(`${err.response.data[0].message}`);
+           }
+           if (err.response.status === 502) {
+             alert("Can't login, gateway error");
+           }
+
+         } else {
+           alert('Service is down');
+         }
+
+       }
+
+     }
+
+   }
   }
 }
 </script>

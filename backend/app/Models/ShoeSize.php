@@ -11,5 +11,8 @@ class ShoeSize extends Model
 
     protected $table = 'shoesizes';
 
+    public function Customers(){
 
+        return $this->hasMany(Customers::class,'idshoesizes');
+    }
 }
