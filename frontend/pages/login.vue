@@ -62,7 +62,7 @@ import XRegExp from "xregexp";
 
 export default {
   name: "login",
-  layout:"none",
+  layout:"no_layout",
   middleware:'guest',
   data(){
     return {

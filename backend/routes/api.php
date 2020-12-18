@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', 'UserController@GetUser');
 
 Route::middleware('auth:api')->get('/customers', 'CustomerController@getCustomer');
 
+Route::middleware('auth:api')->get('/shoesizes', 'CustomerController@getCustomerSizesForChart');
+
 Route::post('/auth/login','AuthController@login');
