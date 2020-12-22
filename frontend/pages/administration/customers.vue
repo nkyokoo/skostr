@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <v-card>
       <v-data-table
         :headers="headers"
         :items="customers"
         :items-per-page="5"
         class="elevation-1"
       ></v-data-table>
-  </div>
+  </v-card>
 </template>
 
 <script>
@@ -40,6 +40,10 @@ export default {
         {
           text: 'Størrelse',
           value: "size"
+        },
+        {
+          text: 'Oprettet',
+          value: "updated_at"
         }
       ],
       customers:[]

@@ -93,7 +93,6 @@ export default {
          await this.$auth.loginWith('local', {
            data:crendetials
          })
-          this.$router.push('administration')
        } catch (err) {
 
          if (err.response.data) {
@@ -110,11 +109,8 @@ export default {
          } else {
            alert('Service is down');
          }
-
        }
-
      }
-
    }
   }
 }

@@ -6,6 +6,7 @@ use App\Models\Customers;
 use App\Models\ShoeSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use function MongoDB\BSON\toJSON;
 
 class CustomerController extends Controller
 {
@@ -25,7 +26,7 @@ class CustomerController extends Controller
             ]);
     }
     public function getCustomerSizesForChart(){
-        $ShoeSizes = DB::table('ShoeSizes')->select(  'age', 'size')->join('customers','customers.idshoesizes','=', 'shoesizes.idshoesizes')->get();
+        $ShoeSizes = DB::table('ShoeSizes')->select(array("size",DB::raw('COUNT(*) as freq')))->groupBy('size')->get();
         if(!$ShoeSizes){
             return response()->json([
                 'status' => 'success',

@@ -24,6 +24,7 @@ export default {
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
+    'plugins/vue-sanitize.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -49,13 +50,13 @@ export default {
   auth: {
     redirect: {
       login: '/login',
-      logout: '/',
+      logout: '/login',
       callback: '/login',
       home: '/administration'
     },
     cookie: {
       options: {
-        maxAge:7200
+        maxAge:3600
       }
     },
     strategies: {
